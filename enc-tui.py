@@ -4,11 +4,16 @@ import string
 import click
 
 @click.command()
-@click.option('--data', default='0', help='data u want to encode')
-def enc(data):
+@click.option('--read')
+@click.option('--data')
+def enc(read, data):
     #initialize data
-    data = data
+    if read != 0:
+        with open(read) as f:
+            mess = f.read()
 
+    else:
+        mess = data
     #alphabet
     conversion_keys = {}
     values = string.ascii_letters + string.digits + string.punctuation + string.whitespace 
@@ -19,7 +24,7 @@ def enc(data):
 
     #encode to nums, pixel = [char,0,0] (resp diff colour)
     enc = []
-    for char in data:
+    for char in mess:
         enc.append(conversion_keys[char])
 
     #encode to nums, version 2; pixel = [char1,char2,char3]
@@ -27,7 +32,6 @@ def enc(data):
     #save to image
     pil_img = Image.fromarray(np.array(enc)).convert('L')
     print(pil_img.mode)
-    # RGB
 
     pil_img.save('hello.bmp')
     print(np.array(enc))

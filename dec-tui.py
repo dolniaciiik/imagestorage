@@ -5,7 +5,7 @@ import string
 import click
 
 @click.command()
-@click.option('--data', default='0', help='data u want to decode')
+@click.argument('data')
 def dec(data):
     #generate conversion keys
     conversion_keys = {}
@@ -22,8 +22,6 @@ def dec(data):
     for char in im:
         dec += conversion_keys[int(str(char).strip('[]'))]
 
-    print(conversion_keys)
-    print(im)
     print(dec)
 
 if __name__ == "__main__":
